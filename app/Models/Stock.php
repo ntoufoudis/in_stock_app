@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Stock extends Model
 {
@@ -16,7 +16,7 @@ class Stock extends Model
         'in_stock' => 'boolean'
     ];
 
-    public function track(): void
+    public function track($callback = null): void
     {
         $status = $this->retailer
             ->client()
@@ -27,7 +27,7 @@ class Stock extends Model
             'price' => $status->price,
         ]);
 
-        $this->recordHistory();
+        $callback && $callback($this);
     }
 
     public function retailer()
@@ -35,20 +35,8 @@ class Stock extends Model
         return $this->belongsTo(Retailer::class);
     }
 
-    public function history(): HasMany
+    public function product(): BelongsTo
     {
-        return $this->hasMany(History::class);
-    }
-
-    /**
-     * @return void
-     */
-    protected function recordHistory(): void
-    {
-        $this->history()->create([
-            'price' => $this->price,
-            'in_stock' => $this->in_stock,
-            'product_id' => $this->product_id,
-        ]);
+        return $this->belongsTo(Product::class);
     }
 }
