@@ -1,33 +1,20 @@
 # In Stock App
 
-Build a site that tracks the availability and price of certain products across multiple retailers.
+A Console Application that tracks the availability and price of certain products across multiple retailers.
 
 Each product might be available from certain retailers, but we have to check if it is in stock.
 
-- stock
-- availability
-- products
-- retailers
+
+## How to use
 
 
-### Product
+### Technologies used
 
-- Nintendo Switch (Neon)
-
-
-
-### Retailers
-
-- Best Buy
-- Amazon
-- Target
-- Walmart
+- Laravel 10
 
 
-### Stock
+### To Do
 
-- product_id
-- retailer_id
-- in_stock
-- price
-- url
+- Create a Web UI
+- Create Basic Authentication System
+- Add Ability to Upload CSV with Products
