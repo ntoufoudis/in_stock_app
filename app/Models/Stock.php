@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\NowInStockEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,10 @@ class Stock extends Model
         $status = $this->retailer
             ->client()
             ->checkAvailability($this);
+
+        if (! $this->in_stock && $status->available) {
+            event(new NowInStockEvent($this));
+        }
 
         $this->update([
             'in_stock' => $status->available,

@@ -5,6 +5,7 @@ namespace Tests\Clients;
 use App\Clients\BestBuy;
 use App\Models\Stock;
 use Database\Seeders\RetailerWithProductSeeder;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -28,7 +29,7 @@ class BestBuyTest extends TestCase
 
         try {
             (new BestBuy())->checkAvailability($stock);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail('Failed to track the BestBuy API properly. ' . $e->getMessage());
         }
 
